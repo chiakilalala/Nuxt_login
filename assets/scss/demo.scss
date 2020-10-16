@@ -1,0 +1,17 @@
+@import "_variables";
+body {
+    background-color: $primary;
+    font-family: 'Noto Sans TC', sans-serif;
+    background: url(~assets/img/demo.png) no-repeat; //引入圖片不能加斜線&@
+}
+
+h2 {
+    @extend %clearfix;
+}
+
+.example {
+    display: grid;
+    transition: all .5s;
+    user-select: none;
+    background: linear-gradient(to bottom, white, black);
+}

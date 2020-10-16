@@ -1,0 +1,28 @@
+{
+    "name": "project001",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "nuxt --port 3013",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate"
+    },
+    "dependencies": {
+        "@nuxtjs/axios": "^5.12.2",
+        "@nuxtjs/proxy": "^2.0.1",
+        "bulma": "^0.9.1",
+        "core-js": "^3.6.5",
+        "express": "^4.17.1",
+        "gsap": "^3.5.1",
+        "js-cookie": "^2.2.1",
+        "jwt-decode": "^3.0.0",
+        "node-sass": "^4.14.1",
+        "nuxt": "^2.14.6",
+        "qs": "^6.9.4",
+        "querystring": "^0.2.0",
+        "sass-loader": "^10.0.2",
+        "vuejs-datepicker": "^1.6.2"
+    },
+    "devDependencies": {}
+}

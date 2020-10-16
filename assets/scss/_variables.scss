@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap');
+//google 思源黑體
+$primary: #40659b;
+$primary_hover: #1B1BEF;
+$bg_primary: #DFE4E5;
+%clearfix {
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+//編譯bulma
+@import '~bulma/sass/utilities/initial-variables';
+@import '~bulma/sass/utilities/functions';
+// Colours
+$primary: #d0eeed;
+$secondary: #d0e0ee;
+$blue:rgb(39,
+124,
+221);
+// Breakpoints
+$tablet: 724px;
+$desktop: 960px+(2 * $gap);
+$widescreen: 1152px+(2 * $gap);
+$fullhd: 1344px+(2 * $gap);
