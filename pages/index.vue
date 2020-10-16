@@ -9,24 +9,31 @@
 <script>
 
 import  CourseList from '~/components/CourseList/CourseList.vue'
+import API from '~/api.js';
 export default {
   //  async fetch(context){
   //   await context.store.dispatch("get_courses")
   // },
 
   fetch(context){
-    return context.$axios("api/courses").then((data)=>{
-      context.store.commit("set_courses",{
-        ...data.data
-      })
-    })
+
   },
 
-//  async asyncData (context) { //打ajax (async await)
-//     let data = await context.$axios("/api/test");
-//     console.log(data.data,'data.data');
-//     return data.data
-//   },
+ async asyncData (context) { //打ajax (async await)
+      return context.$axios({
+      method: 'post',
+      url: API.member.exchangeToken.url,
+      baseURL:  'http://localhost:3034',
+      headers: {
+      'Content-Type': 'application/json' 
+      },
+      data: {}
+    }).then((response)=>{
+      console.log(response.data)
+    }).catch(error => {
+      console.log(error)
+    });
+  },
   data(){
     return{
       title:'',
@@ -41,11 +48,21 @@ export default {
     // console.log(process)
     // console.log(1);//只會在前端觸發到 then(只在前端發生)
     if(process.client){
-      this.$axios("api/courses").then((data)=>{ 
-        this.$store.commit("set_courses",{
-          ...data.data
-        })
-})
+  //  console.log(process.env.NODE_ENV,process.env.firebaseApiKey)
+    this.$axios({
+      method: 'post',
+      url: API.member.exchangeToken.url,
+
+      headers: {
+      'Content-Type': 'application/json' 
+      },
+      data: {}
+    }).then((response)=>{
+      console.log(response.data)
+    }).catch(error => {
+      console.log(error)
+    });
+
 
       console.log('process.client')
     }

@@ -35,6 +35,7 @@ export default {
         { src: '~/plugins/datepicker.js', mode: 'client' },
         { src: '~/plugins/gsap.js', mode: 'client' },
         { src: '~/plugins/qs.js' },
+        { src: '~/plugins/axios.js' },
     ],
 
 
@@ -42,12 +43,16 @@ export default {
     components: true,
 
     // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-    buildModules: [],
+    buildModules: [
+        ['@nuxtjs/dotenv'], //這是給預設 .env 使用
+        ['@nuxtjs/dotenv', { filename: '.env.' + process.env.NODE_ENV }] //這是給其他 .env 使用
+    ],
 
     // Modules (https://go.nuxtjs.dev/config-modules)
     modules: [
         '@nuxtjs/axios',
-        '@nuxtjs/proxy'
+        '@nuxtjs/proxy',
+        'cookie-universal-nuxt',
 
     ],
     proxy: [
@@ -88,9 +93,9 @@ export default {
         { path: '/api', handler: '~/server/api.js' },
         { path: '/auth', handler: '~/server/auth.js' },
     ],
-    env: {
-        firebaseApiKey: "AIzaSyAhoow1udQz0A9ChImK4Fz7I1Y9JlsblOs"
-    },
+    // env: {
+    //     firebaseApiKey: "AIzaSyAhoow1udQz0A9ChImK4Fz7I1Y9JlsblOs"
+    // },
 
 
 

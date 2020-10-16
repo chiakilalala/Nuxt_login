@@ -1,14 +1,21 @@
 const express = require('express')
 const app = express();
 const axios = require('axios');
-const qs = require('querystring')
+const qs = require('querystring');
 
 var google_client_id = "448729113979-5v1481er34o2nfigdlt2v8eatt841agb.apps.googleusercontent.com";
 var google_secret_id = "Eg4Km7Hh6MIZHVZsuY4R96nh"; //這個一定不能曝露到客戶端!!!
-var firebaseApiKey = "AIzaSyAhoow1udQz0A9ChImK4Fz7I1Y9JlsblOs" //填上firebase 的 api key (不能填 nuxt.config.js 裡的 process env)
+//填上firebase 的 api key (不能填 nuxt.config.js 裡的 process env)
 
-var process_url = "http://localhost:3013"; //填上你開發環境的網址
-if (process.env.NODE_ENV == "production") process_url = "https://chiakilalala.fun"; //填上你生產環境的網址
+let env = {
+    ...require('dotenv').config({ path: ".env." + process.env.NODE_ENV }).parsed,
+    ...require('dotenv').config().parsed
+}
+
+var firebaseApiKey = env.firebaseApiKey; //填上firebase 的 api key
+var process_url = env.web_url;
+
+
 
 app.get('/', (req, res) => {
     var referer = req.headers.referer; //前端請求過來的路徑
@@ -55,9 +62,9 @@ app.get("/google", async(req, res) => {
     const id_token = result.data.id_token; //jwt token
     const access_token = result.data.access_token;
 
-    console.log(access_token, "access_token")
-        //到這個流程就算取得 google 的 access_token ，你可以開始請求 google 的資源，例如請求使用者的 email  
-        //https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=ya29.a0Ae4lvC3EFz9mlS75b9DXi5x_1kIr83w21f6yk1S7JHmOm-rCJtzjWgW9_Z7QXwqweyDuhz-jATx2s_xieGZIPJPE6d4-B3wgrf2-BgN3m5BYStREsXsRmyq1x8CozKWConw3iugw-K0ZizMqqCge8kbT978CcVDTJWg
+    // console.log(access_token, "access_token")
+    //到這個流程就算取得 google 的 access_token ，你可以開始請求 google 的資源，例如請求使用者的 email  
+    //https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=ya29.a0Ae4lvC3EFz9mlS75b9DXi5x_1kIr83w21f6yk1S7JHmOm-rCJtzjWgW9_Z7QXwqweyDuhz-jATx2s_xieGZIPJPE6d4-B3wgrf2-BgN3m5BYStREsXsRmyq1x8CozKWConw3iugw-K0ZizMqqCge8kbT978CcVDTJWg
 
     //使用 google 的 access_token 換取 firebase 的 token
     //https://firebase.google.com/docs/reference/rest/auth#section-sign-in-with-oauth-credential

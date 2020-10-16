@@ -3,15 +3,20 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "dev": "nuxt --port 3013",
-        "build": "nuxt build",
+        "dev": "NODE_ENV=dev nuxt --port 3013",
+        "sit": "NODE_ENV=sit nuxt --port 3013",
+        "prod": "NODE_ENV=prod nuxt --port 3013",
+        "build": "NODE_ENV=prod nuxt build",
+        "build_SIT": "NODE_ENV=sit nuxt build",
         "start": "nuxt start",
         "generate": "nuxt generate"
     },
     "dependencies": {
         "@nuxtjs/axios": "^5.12.2",
+        "@nuxtjs/dotenv": "^1.4.1",
         "@nuxtjs/proxy": "^2.0.1",
         "bulma": "^0.9.1",
+        "cookie-universal-nuxt": "^2.1.4",
         "core-js": "^3.6.5",
         "express": "^4.17.1",
         "gsap": "^3.5.1",

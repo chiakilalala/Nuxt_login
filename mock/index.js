@@ -17,6 +17,12 @@ const test = require("./routers/test");
 app.use('/api', test);
 
 
+const chiakilalala_nuxt = require("./routers/chiakilalala_nuxt");
+app.use('/', chiakilalala_nuxt);
+
+
+
+
 app.use((req, res, next) => {
     console.log('Time:', Date.now());
     next();
