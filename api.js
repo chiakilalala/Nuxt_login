@@ -31,6 +31,17 @@ const API = {
         url: "/courses_item/:id.json",
         method: "get"
     },
+    //新增/編輯會員資料
+    patchMemberInfo: {
+        url: "/users/:user_id.json",
+        method: "patch"
+    },
+    //取得會員資料
+    getMemberInfo: {
+        url: "/users/:user_id.json",
+        method: "get"
+    },
+
 };
 //node 寫法
 module.exports = API; //這邊用 node 的寫法，mock 才能呼叫

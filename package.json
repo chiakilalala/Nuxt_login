@@ -3,13 +3,19 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "dev": "NODE_ENV=dev nuxt --port 3013",
-        "sit": "NODE_ENV=sit nuxt --port 3013",
-        "prod": "NODE_ENV=prod nuxt --port 3013",
-        "build": "NODE_ENV=prod nuxt build",
-        "build_SIT": "NODE_ENV=sit nuxt build",
-        "start": "nuxt start",
-        "generate": "nuxt generate"
+        "dev": "cross-env NODE_ENV=dev nuxt --port 3013",
+        "sit": "cross-env NODE_ENV=sit nuxt --port 3013",
+        "prod": "cross-env NODE_ENV=prod nuxt --port 3013",
+        "build": "cross-env NODE_ENV=prod nuxt build",
+        "build_SIT": "cross-env NODE_ENV=sit nuxt build",
+        "start": "cross-env NODE_ENV=prod nuxt start",
+        "start_SIT": "cross-env NODE_ENV=sit nuxt start",
+        "pm2_setup": "pm2 deploy prod setup",
+        "pm2_setup_SIT": "pm2 deploy sit setup",
+        "pm2_deploy": "pm2 deploy ecosystem.config.js prod --force",
+        "pm2_deploy_SIT": "pm2 deploy ecosystem.config.js sit --force",
+
+        "test": "jest"
     },
     "dependencies": {
         "@nuxtjs/axios": "^5.12.2",
@@ -18,16 +24,20 @@
         "bulma": "^0.9.1",
         "cookie-universal-nuxt": "^2.1.4",
         "core-js": "^3.6.5",
+        "cross-env": "^7.0.2",
         "express": "^4.17.1",
         "gsap": "^3.5.1",
         "js-cookie": "^2.2.1",
         "jwt-decode": "^3.0.0",
         "node-sass": "^4.14.1",
         "nuxt": "^2.14.6",
+        "nuxt-start": "^2.14.7",
         "qs": "^6.9.4",
         "querystring": "^0.2.0",
         "sass-loader": "^10.0.2",
         "vuejs-datepicker": "^1.6.2"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "jest": "^26.6.0"
+    }
 }

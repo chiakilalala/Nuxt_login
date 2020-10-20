@@ -6,6 +6,7 @@ es6 模組化寫法
 2. import 把模組引入
 
 vuex actions 概念
+
 1、actions 處理非同步的資料 (ajax)
 2、actions 的代表動詞為 dispatch，所有調度 vuex 的行為都在這裡執行 (調度 state、getters、mutations)
 3、actions 裡面有 this → 就是 store 本身

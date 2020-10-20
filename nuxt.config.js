@@ -1,6 +1,9 @@
 import router from "./router.js";
 import webpack from 'webpack';
 
+console.log(process.env.NODE_ENV, "nuxt.config.js")
+
+
 export default {
     // Global page headers (https://go.nuxtjs.dev/config-head)
     head: {
@@ -44,7 +47,7 @@ export default {
 
     // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
     buildModules: [
-        ['@nuxtjs/dotenv'], //這是給預設 .env 使用
+
         ['@nuxtjs/dotenv', { filename: '.env.' + process.env.NODE_ENV }] //這是給其他 .env 使用
     ],
 
@@ -55,10 +58,9 @@ export default {
         'cookie-universal-nuxt',
 
     ],
-    proxy: [
-        'http://localhost:3034/api'
-    ],
-
+    // proxy: [
+    //     'http://localhost:3034/api'
+    // ],
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {
@@ -90,7 +92,7 @@ export default {
         }
     },
     serverMiddleware: [
-        { path: '/api', handler: '~/server/api.js' },
+        // { path: '/api', handler: '~/server/api.js' },
         { path: '/auth', handler: '~/server/auth.js' },
     ],
     // env: {

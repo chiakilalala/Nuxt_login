@@ -7,6 +7,7 @@ export const state = () => ({
         aaa: 1,
         bbb: "string"
     },
+    userFavorite: null,
     courses: [],
     isUserLoggedIn: false, //是否登入
     userPicture: "", //會員照片
@@ -61,13 +62,11 @@ export const mutations = {
     set_userFavorite: (state, payload) => {
         state.userFavorite = payload || {};
     }
+
 }
 
 export const actions = {
-    nuxtServerInit({ commit }, context) {
-
-
-
+    nuxtServerInit({ commit, dispatch }, context) {
 
         //這邊是給 Oauth 回來時提早觸發
         if (context.query.id_token && context.query.refresh_token) {
@@ -79,7 +78,8 @@ export const actions = {
                 userPicture: id_token_Decode.picture,
                 userName: id_token_Decode.name,
             });
-
+            //會員資料
+            dispatch("saveMemberInfo");
             context.app.$cookies.set("id_token", context.query.id_token);
             context.app.$cookies.set("refresh_token", context.query.refresh_token);
             context.app.$cookies.set("userUid", id_token_Decode.user_id);
@@ -118,7 +118,79 @@ export const actions = {
 
 
     },
+    //收藏
+    getUserFavorite({ state, commit }, payload) {
+        if (!state.isUserLoggedIn) return;
+        let uid = state.userUid;
+        return this.$axios({
+            method: API.getMemberInfo.method,
+            url: API.getMemberInfo.url.replace(":user_id.json", uid + ".json") + "?auth=" + this.$cookies.get('id_token'),
+        }).then((response) => {
+            commit("set_userFavorite", response.data.favorite);
+            console.log(state.userFavorite, "state.userFavorite")
+        }).catch(error => {
+            console.log(error, "error")
+        });
+    },
+    async setCoursesList({ commit }, context) {
+        //參考首頁的 fetch
+        return this.$axios({
+            method: API.getCoursesList.method,
+            url: API.getCoursesList.url,
+        }).then((response) => {
+            let courses_array = [];
+            //組成 state.courses 的格式
+            for (let key in response.data) {
+                courses_array.push({
+                    id: key,
+                    ...response.data[key],
+                });
+            }
+            //這邊做排序
+            courses_array = courses_array.sort((a, b) => {
+                return a.order > b.order ? 1 : -1;
+            });
+            commit("set_courses", {
+                courses: courses_array,
+            });
+        }).catch((error) => {
+            console.log(error.response, "error");
+            console.log("TO DO error");
+        });
 
+    },
+    updateUserFavorite({ state }, payload) {
+        return this.$axios({
+            method: API.patchMemberInfo.method,
+            url: API.patchMemberInfo.url.replace(":user_id.json", state.userUid + ".json") + "?auth=" + this.$cookies.get('id_token'),
+            data: {
+                favorite: state.userFavorite
+            }
+        }).then((response) => {
+            console.log(response.data)
+        }).catch(error => {
+            console.log(error)
+        });
+    },
+
+    saveMemberInfo({ state }, payload) {
+        let uid = (payload && payload.userUid) || state.userUid;
+        let _data = payload || {
+            name: state.userName,
+            picture: state.userPicture
+        }
+        return this.$axios({
+            method: API.patchMemberInfo.method,
+            url: API.patchMemberInfo.url.replace(":user_id.json", uid + ".json"),
+            data: {
+                ..._data
+            }
+        }).then((response) => {
+            console.log(response.data, "patchMemberInfo response")
+        }).catch(error => {
+            console.log(error, "error")
+        });
+    },
     async ajaxTest({ commit, getters }, payload) {
         let data = await this.$axios("/api/test");
         // console.log(data.data, 'data.data');
