@@ -14,6 +14,7 @@
         "pm2_setup_SIT": "pm2 deploy sit setup",
         "pm2_deploy": "pm2 deploy ecosystem.config.js prod --force",
         "pm2_deploy_SIT": "pm2 deploy ecosystem.config.js sit --force",
+        "generate": "nuxt generate",
         "test": "jest"
     },
     "dependencies": {
