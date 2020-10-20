@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "./courseList.scss";
+  @import "./CourseList.scss";
 </style>
 
 

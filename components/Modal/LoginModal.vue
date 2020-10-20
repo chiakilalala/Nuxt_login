@@ -175,5 +175,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "./loginModal.scss";
+  @import "./LoginModal.scss";
 </style>
